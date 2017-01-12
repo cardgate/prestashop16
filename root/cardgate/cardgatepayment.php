@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.18';
+    var $version = '1.6.19';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -95,6 +95,8 @@ class CardgatePayment extends PaymentModule {
             $sPrefix = '';
         }
         $extrafee = $this->extraCosts( $this->extra_cost );
+        $extrafee = (is_numeric($extrafee) ? $extrafee : 0);
+        
         $cart = $this->context->cart;
 
         $cg_total = number_format( (($cart->getOrderTotal( true, Cart::BOTH ) + $extrafee) * 100 ), 0, '.', '' );
