@@ -12,7 +12,7 @@ class Cardgate extends PaymentModule {
         $this->paymentcode = 'cardgate';
         $this->paymentname = 'CardGate';
         $this->tab = 'payments_gateways';
-        $this->version = '1.6.18';
+        $this->version = '1.6.20';
         $this->author = 'CardGate';
         $this->bootstrap = true;
         $this->currencies = true;
@@ -76,6 +76,18 @@ class Cardgate extends PaymentModule {
                 copy( $source, $destination );
             }
             Configuration::updateGlobalValue( 'CARDGATE_PENDING', ( int ) $order_state->id );
+        } else {
+            $order_state = new OrderState(Configuration::get( 'CARDGATE_PENDING' ));
+            $order_state->send_email = true;
+            $order_state->template = 'payment';
+            $order_state->color = 'RoyalBlue';
+            $orderState->hidden = false;
+            $orderState->delivery = false;
+            $orderState->logable = false;
+            $orderState->invoice = false;
+            $orderState->paid = false;
+            $order_state->unremovable = true;
+            $order_state->save();
         }
     }
 
