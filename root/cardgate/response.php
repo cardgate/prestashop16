@@ -234,7 +234,6 @@ if ( $_mr->__isSafe()) {
                 break;
             case 'canceled':
                 $message = "Transaction canceled";
-                $ln = 'Detail of order Cart = ' . $cartId . ' Message ' . $message . '!';
                 if ( !empty( $_REQUEST['status_id'] ) && $_REQUEST['status_id'] != 309 ) {
                     $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', str_replace( '.br.', "<br/>\n", $message ) );
                 }
@@ -243,8 +242,7 @@ if ( $_mr->__isSafe()) {
                 $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
                 break;
             case 'succes':
-                    $st = Configuration::get( 'CARDGATE_PENDING' );
-                    $_cardgate->validateOrder( $cartId, $st, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
+                    $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
                 break;
         }
 
@@ -266,25 +264,10 @@ if ( $_mr->__isSafe()) {
             $oOrder->total_shipping = $newShippingCosts;
             $oOrder->total_shipping_tax_excl = $oOrder->total_shipping_tax_excl + $extraCostsExcl;
             $oOrder->total_shipping_tax_incl = $newShippingCosts;
-
             $oOrder->total_paid_tax_excl = $oOrder->total_paid_tax_excl + $extraCostsExcl;
             $oOrder->total_paid_tax_incl = $oOrder->total_paid_real = $oOrder->total_paid = $oOrder->total_paid + floatval( $extraCosts );
 
             $oOrder->update();
-        }
-        if ( ($sStatus == 'succes') ) {
-            $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, 'Unknown', $_REQUEST['transaction_id'] );
-            $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
-
-            $history = new OrderHistory();
-            $history->id_order = ( int ) $oOrder->id;
-            $id_order_state = $newStatus;
-            $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
-            $res = Db::getInstance()->getRow( '
-			SELECT `invoice_number`, `invoice_date`, `delivery_number`, `delivery_date`
-			FROM `' . _DB_PREFIX_ . 'orders`
-			WHERE `id_order` = ' . ( int ) $oOrder->id );
-            $history->addWithemail();
         }
     }
     echo $_REQUEST['transaction_id'] . "." . $_REQUEST['status_id'];

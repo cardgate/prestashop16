@@ -62,8 +62,13 @@ class Cardgateideal extends CardgatePayment {
 
     
     public function getBanks() {
+        if (Configuration::get( 'CARDGATE_MODE' ) == 1){
+            $test = '-TEST';
+        } else {
+            $test = '';
+        }
         
-        $url = 'https://gateway.cardgateplus.com/cache/idealDirectoryRabobank.dat';
+        $url = $this->get_url().'/cache/idealDirectoryCUROPayments'.$test.'.dat';
          
         if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
             $result = false;
@@ -76,19 +81,6 @@ class Cardgateideal extends CardgatePayment {
         if ( $result ) {
             $aBanks = unserialize( $result );
             $aBanks[0] = $this->l('-Choose your bank please-');
-        }
-
-        if ( count( $aBanks ) < 1 ) {
-            $aBanks = array( '0031' => 'ABN Amro',
-                '0091' => 'Friesland Bank',
-                '0721' => 'ING Bank',
-                '0021' => 'Rabobank',
-                '0751' => 'SNS Bank',
-                '0761' => 'ASN Bank',
-                '0771' => 'SNS Regio Bank',
-                '0511' => 'Triodos Bank',
-                '0161' => 'Van Landschot Bank'
-            );
         }
         return $aBanks;
     }    
