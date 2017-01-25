@@ -42,8 +42,10 @@ class Cardgate extends PaymentModule {
         if ( !Configuration::get( 'CARDGATE_PENDING' ) ) {
             $order_state = new OrderState();
             $order_state->name = array();
+            $is_update = false;
         } else {
             $order_state = new OrderState( Configuration::get( 'CARDGATE_PENDING' ) );
+            $is_update = true;
         }
         
         foreach ( Language::getLanguages() as $language ) {
@@ -65,20 +67,22 @@ class Cardgate extends PaymentModule {
         $order_state->send_email = true;
         $order_state->template = 'payment';
         $order_state->color = 'RoyalBlue';
-        $orderState->hidden = false;
-        $orderState->delivery = false;
-        $orderState->logable = false;
-        $orderState->invoice = false;
-        $orderState->paid = false;
+        $order_state->hidden = false;
+        $order_state->delivery = false;
+        $order_state->logable = false;
+        $order_state->invoice = false;
+        $order_state->paid = false;
         $order_state->unremovable = true;
 
-
-        if ( $order_state->add() ) {
+        if ($is_update){
+            $order_state->save();
+        } else {
+            $order_state->add();
             $source = _PS_MODULE_DIR_ . 'cardgate/logo.gif';
             $destination = dirname( __FILE__ ) . '/../../img/os/' . ( int ) $order_state->id . '.gif';
             copy( $source, $destination );
+            Configuration::updateGlobalValue( 'CARDGATE_PENDING', ( int ) $order_state->id );
         }
-        Configuration::updateGlobalValue( 'CARDGATE_PENDING', ( int ) $order_state->id );
     }
 
     public function displayConf() {

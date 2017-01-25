@@ -157,23 +157,26 @@ class cardgate_response {
     }
 
     function getStatus() {
-        $status = $this->post['status'];
+        
         $status_id = $this->post['status_id'];
-
-        if ( $status == '0' ) {
+        
+        if ( $status_id >= '0' && $status_id < '200') {
             $statusResult = 'pending';
         }
-        if ( $status >= '200' && $status < '300' ) {
+        
+        if ( $status_id >= '200' && $status_id < '300' ) {
             $statusResult = 'succes';
         }
-        if ( $status >= '300' && $status < '400' ) {
+        
+        if ( $status_id >= '300' && $status_id < '400' ) {
             if ( $status_id == '309' ) {
                 $statusResult = 'canceled';
             } else {
                 $statusResult = 'failed';
             }
         }
-        if ( $status >= '700' && $status < '800' ) {
+        
+        if ( $status_id >= '700' && $status_id < '800' ) {
             $statusResult = 'pending';
         }
 
