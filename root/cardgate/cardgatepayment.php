@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.21';
+    var $version = '1.6.22';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -157,7 +157,7 @@ class CardgatePayment extends PaymentModule {
             $item['vat_inc'] = 1;
             $item['type'] = 3;
             $cartitems[] = $item;
-        }
+        } 
 
         $data = array();
         $data['option'] = $this->paymentcode;
@@ -165,7 +165,7 @@ class CardgatePayment extends PaymentModule {
         $data['test'] = Configuration::get( 'CARDGATE_MODE' );
         $data['language'] = $this->context->language->iso_code;
         $data['hash'] = $hash;
-        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key;
+        $data['return_url'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order-confirmation&id_cart=' . ( int ) $cart->id . '&key=' . $customer->secure_key . '&id_module=' . $this->id;
         $data['return_url_failed'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
         $data['amount'] = $cg_total;
         $data['currency'] = $currency->iso_code;
