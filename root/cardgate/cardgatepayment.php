@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.22';
+    var $version = '1.6.23';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -113,51 +113,111 @@ class CardgatePayment extends PaymentModule {
         $products = $cart->getproducts( true );
 
         foreach ( $products as $product ) {
-            $vat_amount = $product['price_wt'] - $product['price'];
-            $vat = round( $vat_amount / $product['price'] * 100, 2 );
-            $item = array();
-            $item['quantity'] = $product['cart_quantity'];
-            $item['sku'] = $product['id_product'];
-            $item['name'] = $product['name'];
-            $item['price'] = round( $product['price_wt'] * 100, 0 );
-            $item['vat'] = $vat;
-            $item['vat_amount'] = round( $vat_amount * 100, 0 );
-            $item['vat_inc'] = 1;
-            $item['type'] = 1;
-            $cartitems[] = $item;
+        	$vat_amount = $product ['price_wt'] - $product ['price'];
+        	$vat = round ( $vat_amount / $product ['price'] * 100, 2 );
+        	$item = array ();
+        	$item ['quantity'] = $product ['cart_quantity'];
+        	$item ['sku'] = $product ['id_product'];
+        	$item ['name'] = $product ['name'];
+        	$item ['price'] = round ( $product ['price'] * 100, 0 );
+        	$item ['vat'] = $vat;
+        	$item ['vat_amount'] = round ( $vat_amount * 100, 0 );
+        	$item ['vat_inc'] = 0;
+        	$item ['type'] = 1;
+        	$cartitems [] = $item;
+        	$iCartItemTotal += round ( $item ['price'] * $item ['quantity'] );
+        	$iCartItemTaxTotal += round ( $item ['vat_amount'] * $item ['quantity'] );
         }
 
         $shippingcost = 0;
-        if ( isset( $cart->id_carrier ) ) {
-            $shippingcost = $cart->getOrderShippingCost( $cart->id_carrier );
+        $iShippingTotal = 0;
+        $iShippingTaxTotal = 0;
+        
+        $free_shipping = false;
+        foreach ( $this->context->cart->getCartRules () as $rule ) {
+        	if ($rule ['free_shipping']) {
+        		$free_shipping = true;
+        		break;
+        	}
         }
-        if ( $shippingcost > 0 ) {
-            $carrier = new Carrier( $cart->id_carrier );
-            $item = array();
-            $item['quantity'] = 1;
-            $item['sku'] = 'SHIPPING_' . $carrier->id_reference;
-            $item['name'] = $carrier->name;
-            $item['price'] = round( $shippingcost * 100, 0 );
-            $item['vat'] = 0;
-            $item['vat_amount'] = 0;
-            $item['vat_inc'] = 1;
-            $item['type'] = 2;
-            $cartitems[] = $item;
+        
+        if ($free_shipping === false) {
+        	
+        	$shipping_cost_with_tax = $this->context->cart->getOrderTotal ( true, Cart::ONLY_SHIPPING );
+        	$shipping_cost_without_tax = $this->context->cart->getOrderTotal ( false, Cart::ONLY_SHIPPING );
+        	
+        	if ($shipping_cost_without_tax > 0) {
+        		$carrier = new Carrier ( $this->context->cart->id_carrier );
+        		
+        		$carrieraddress = new Address ( $this->context->cart->id_address_delivery );
+        		if (! Configuration::get ( 'PS_ATCP_SHIPWRAP' )) {
+        			$carriertaxrate = round ( ($shipping_cost_with_tax / $shipping_cost_without_tax) - 1, 2 ) * 100;
+        		} else {
+        			$carriertaxrate = $carrier->getTaxesRate ( $carrieraddress );
+        		}
+        		
+        		if (($shipping_cost_with_tax != $shipping_cost_without_tax) && $carriertaxrate == 0) {
+        			// Prestashop error due to EU module?
+        			$carriertaxrate = round ( ($shipping_cost_with_tax / $shipping_cost_without_tax) - 1, 2 ) * 100;
+        		}
+        		
+        		// $shippingReference = $this->module->shippingreferences[$language->iso_code];
+        		$item = array ();
+        		$item ['quantity'] = 1;
+        		$item ['sku'] = 'SHIPPING_' . $carrier->id_reference;
+        		$item ['name'] = $carrier->name;
+        		$item ['price'] = round ( $shipping_cost_without_tax * 100, 0 );
+        		$item ['vat'] = $carriertaxrate;
+        		$item ['vat_amount'] = round ( ($shipping_cost_with_tax - $shipping_cost_without_tax) * 100, 0 );
+        		$item ['vat_inc'] = 0;
+        		$item ['type'] = 2;
+        		$cartitems [] = $item;
+        		
+        		$iShippingTotal += round ( $item ['price'] * $item ['quantity'], 0 );
+        		$iShippingTaxTotal += round ( $item ['vat_amount'] * $item ['quantity'], 0 );
+        	}
         }
 
-        if ( $extrafee > 0 ) {
-            $carrier = new Carrier( $cart->id_carrier );
-            $item = array();
-            $item['quantity'] = 1;
-            $item['sku'] = 'TRANSACTIONFEE';
-            $item['name'] = 'Transactie kosten';
-            $item['price'] = round( $extrafee * 100, 0 );
-            $item['vat'] = 0;
-            $item['vat_amount'] = 0;
-            $item['vat_inc'] = 1;
-            $item['type'] = 3;
-            $cartitems[] = $item;
-        } 
+        if ($extrafee > 0) {
+        	$item = array ();
+        	$item ['quantity'] = 1;
+        	$item ['sku'] = 'TRANSACTIONFEE';
+        	$item ['name'] = 'Transactie kosten';
+        	$item ['price'] = round ( $extrafee , 0 );
+        	$item ['vat'] = 0;
+        	$item ['vat_amount'] = 0;
+        	$item ['vat_inc'] = 1;
+        	$item ['type'] = 3;
+        	$cartitems [] = $item;
+        }
+        
+        $iProductCorrection = round($cart->getOrderTotal ( false, Cart::BOTH )*100,0) - $iCartItemTotal - $iShippingTotal;
+        
+        if ($iProductCorrection != 0) {
+        	$item = array ();
+        	$item ['quantity'] = 1;
+        	$item ['sku'] = 'PRODUCTCORRECTION';
+        	$item ['name'] = 'product_corection';
+        	$item ['price'] = $iProductCorrection;
+        	$item ['vat'] = 0;
+        	$item ['vat_amount'] = 0;
+        	$item ['vat_inc'] = 1;
+        	$item ['type'] = 6;
+        	$cartitems [] = $item;
+        }
+        $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal - $extrafee;
+        if ($iTaxCorrection != 0) {
+        	$item = array ();
+        	$item ['quantity'] = 1;
+        	$item ['sku'] = 'VATCORRECTION';
+        	$item ['name'] = 'vat_corection';
+        	$item ['price'] = $iTaxCorrection;
+        	$item ['vat'] = 0;
+        	$item ['vat_amount'] = 0;
+        	$item ['vat_inc'] = 1;
+        	$item ['type'] = 7;
+        	$cartitems [] = $item;
+        }
 
         $data = array();
         $data['option'] = $this->paymentcode;
