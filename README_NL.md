@@ -1,6 +1,6 @@
 ![CardGate](https://cdn.curopayments.net/thumb/200/logos/cardgate.png)
 
-# CardGate module for PrestaShop 1.6.x
+# CardGate module voor PrestaShop 1.6.x
 
 [![Total Downloads](https://img.shields.io/packagist/dt/cardgate/prestashop16.svg)](https://packagist.org/packages/cardgate/prestashop16)
 [![Latest Version](https://img.shields.io/packagist/v/cardgate/prestashop16.svg)](https://github.com/cardgate/prestashop16/releases)
