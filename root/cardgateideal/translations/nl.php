@@ -14,5 +14,5 @@ $_MODULE['<{cardgateideal}prestashop>payment_execution_da9c72b9e543135f3f59e3c8a
 $_MODULE['<{cardgateideal}prestashop>payment_execution_cea8e024a84187b840d60fbac80e9701'] = 'U heeft iDEAL als betaalmethode gekozen';
 $_MODULE['<{cardgateideal}prestashop>payment_execution_3491e4b5dab480539a1a5485a2e689cb'] = 'Kies uw bank:';
 $_MODULE['<{cardgateideal}prestashop>payment_execution_569fd05bdafa1712c4f6be5b153b8418'] = 'Andere betaalmethoden';
-$_MODULE['<{cardgateideal}prestashop>payment_execution_46b9e3665f187c739c55983f757ccda0'] = 'Ik bevestig mijn Order';
+$_MODULE['<{cardgateideal}prestashop>payment_execution_46b9e3665f187c739c55983f757ccda0'] = 'Ik bevestig mijn order';
 $_MODULE['<{cardgateideal}prestashop>payment_execution_64d452459a2ed47b25fc16efbfb0048d'] = 'Kies uw bank!';

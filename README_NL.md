@@ -2,10 +2,6 @@
 
 # CardGate module voor PrestaShop 1.6.x
 
-[![Total Downloads](https://img.shields.io/packagist/dt/cardgate/prestashop16.svg)](https://packagist.org/packages/cardgate/prestashop16)
-[![Latest Version](https://img.shields.io/packagist/v/cardgate/prestashop16.svg)](https://github.com/cardgate/prestashop16/releases)
-[![Build Status](https://travis-ci.org/cardgate/prestashop16.svg?branch=master)](https://travis-ci.org/cardgate/prestashop16)
-
 ## Support
 
 Deze plug-in is geschikt voor PrestaShop versie **1.6.x**.
