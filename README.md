@@ -9,7 +9,7 @@ This plugin supports PrestaShop version **1.6.x**.
 ## Preparation
 
 The usage of this module requires that you have obtained CardGate security credentials.
-Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your Dite ID and Hash Key, or contact your accountmanager.
+Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your Site ID and Hash Key, or contact your accountmanager.
 
 ## Installation
 
