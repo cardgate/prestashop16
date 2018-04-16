@@ -16,9 +16,11 @@ of neem contact op met je accountmanager.
 
 1. Download en unzip het **cardgate.zip** bestand op je bureaublad.
 
-2. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Modules**.
+2. Plaats de inhoud van de **root** map via FTP in de **modules** map van je website.
 
-3. Klik op **Nieuwe Module toevoegen** en upload de plug-in.
+3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geinstalleerde Modules**.
+
+4. Controleer het versienummer van de geinstalleerde CardGate modules.
 
 ## Configuratie
 

@@ -15,9 +15,11 @@ Please visit [My Cardgate](https://my.cardgate.com/) and retrieve your Site ID a
 
 1. Download the cardgate.zip file to your desktop.
 
-2. In your PrestaShop **admin**, go to the **Modules** tab and select **Modules**.
+2. Unzip the file, and, using FTP, upload the **contents** of the **root** folder to the **modules** folder of your website.
 
-3. Click on **Add New Module** and upload the plug-in.
+3. In your PrestaShop **admin**, go to the **Modules** tab and select **Installed Modules**.
+
+4. Check the version of the installed CardGate modules.
 
 ## Configuration
 
