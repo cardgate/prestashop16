@@ -23,9 +23,9 @@ class Cardgate extends PaymentModule {
         parent::__construct();
 
         $this->page = basename( __FILE__, '.php' );
-        $this->displayName = $this->l( 'CardGate Bank common' );
-        $this->description = $this->l( 'CardGate Bank base module.' );
-        $this->confirmUninstall = $this->l( 'Are you sure you want to uninstall the CardGate module?' );
+        $this->displayName = $this->l('CardGate Bank common');
+        $this->description = $this->l('CardGate Bank base module.');
+        $this->confirmUninstall = $this->l('Are you sure you want to uninstall the CardGate module?');
     }
 
     public function install() {
@@ -87,7 +87,7 @@ class Cardgate extends PaymentModule {
 
     public function displayConf() {
 
-        $this->_html = $this->displayConfirmation( $this->l( 'Settings updated' ) );
+        $this->_html = $this->displayConfirmation( $this->l('Settings updated') );
     }
 
     public function alterName( $name ) {
@@ -113,7 +113,7 @@ class Cardgate extends PaymentModule {
             Configuration::updateValue( 'CARDGATE_SITEID', $siteid );
             Configuration::updateValue( 'CARDGATE_HASH_KEY', $hashkey );
 
-            $output .= $this->displayConfirmation( $this->l( 'Settings updated' ) );
+            $output .= $this->displayConfirmation( $this->l('Settings updated') );
         }
 
         return $output . $this->displayForm();
@@ -124,7 +124,7 @@ class Cardgate extends PaymentModule {
         $my_module_field_names = array();
         $modules = Module::getModulesOnDisk();
         foreach ( $modules AS $module ) {
-            if ( strstr( $module->name, 'cardgate' ) !== false ) {
+            if ( strstr( $module->name, 'cardgate') !== false ) {
                 $name = str_replace( 'cardgate', '', $module->name );
                 if ( $name != '' ) {
                     $name = $this->alterName( $name );
@@ -139,23 +139,23 @@ class Cardgate extends PaymentModule {
 
             $extra_costs[] = array(
                 'type' => 'text',
-                'label' => $this->l( 'Extra cost' ) . ' ' . $module,
+                'label' => $this->l('Extra cost') . ' ' . $module,
                 'name' => $my_module_field_names[$key],
                 'size' => '1',
                 'required' => false,
-                'hint' => $this->l( 'Add an extra charge for your payment method, for example, 1.95 or 5%' ),
+                'hint' => $this->l('Add an extra charge for your payment method, for example, 1.95 or 5%'),
             );
         }
 
         $fields_form[0]['form'] = array(
             'legend' => array(
-                'title' => $this->l( 'General Settings' ),
+                'title' => $this->l('General Settings'),
                 'image' => '../img/admin/edit.gif'
             ),
             'input' => array(
                 array(
                     'type' => 'select',
-                    'label' => $this->l( 'Mode' ),
+                    'label' => $this->l('Mode'),
                     'name' => 'CARDGATE_MODE',
                     'required' => false,
                     'default_value' => 1,
@@ -167,23 +167,23 @@ class Cardgate extends PaymentModule {
                 ),
                 array(
                     'type' => 'text',
-                    'label' => $this->l( 'Site Id' ),
+                    'label' => $this->l('Site Id'),
                     'name' => 'CARDGATE_SITEID',
                     'size' => 64,
                     'required' => true,
-                    'hint' => $this->l( 'The CardGate Site Id, which you can find in your CardGate back-office' )
+                    'hint' => $this->l('The CardGate Site Id, which you can find in your CardGate back-office')
                 ),
                 array(
                     'type' => 'text',
-                    'label' => $this->l( 'Hash Key' ),
+                    'label' => $this->l('Hash Key'),
                     'name' => 'CARDGATE_HASH_KEY',
                     'size' => 20,
                     'required' => true,
-                    'hint' => $this->l( 'The CardGate Hash Key, which you can find in your CardGate back-office' )
+                    'hint' => $this->l('The CardGate Hash Key, which you can find in your CardGate back-office')
                 ),
             ),
             'submit' => array(
-                'title' => $this->l( 'Save' ),
+                'title' => $this->l('Save'),
                 'class' => 'btn btn-default pull-right'
             )
         );
@@ -205,12 +205,12 @@ class Cardgate extends PaymentModule {
         $helper->submit_action = 'submit' . $this->name;
         $helper->toolbar_btn = array(
             'save' => array(
-                'desc' => $this->l( 'Save' ),
+                'desc' => $this->l('Save'),
                 'href' => AdminController::$currentIndex . '&configure=' . $this->name . '&save' . $this->name . '&token=' . Tools::getAdminTokenLite( 'AdminModules' )
             ),
             'back' => array(
                 'href' => AdminController::$currentIndex . '&token=' . Tools::getAdminTokenLite( 'AdminModules' ),
-                'desc' => $this->l( 'Back to list' )
+                'desc' => $this->l('Back to list')
             )
         );
 
