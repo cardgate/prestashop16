@@ -4,23 +4,23 @@
 
 ## Support
 
-Deze plug-in is geschikt voor PrestaShop versie **1.6.x**.
+Deze module is geschikt voor PrestaShop versie **1.6.x** .
 
 ## Voorbereiding
 
 Voor het gebruik van deze module zijn CardGate gegevens nodig.  
-Bezoek hiervoor [Mijn CardGate](https://my.cardgate.com/) en haal je Site ID and Hash Key op,  
+Bezoek hiervoor [Mijn CardGate](https://my.cardgate.com/) en haal je gegevens op,  
 of neem contact op met je accountmanager.  
 
 ## Installatie
 
-1. Download en unzip het **cardgate.zip** bestand op je bureaublad.
+1. Download en unzip de meest recente [source code](https://github.com/cardgate/prestashop16/releases/) op je bureaublad.
 
-2. Plaats de inhoud van de **root** map via FTP in de **modules** map van je website.
+2. Plaats de **inhoud** van de **root** map via FTP in de **modules** map van je website.
 
-3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geinstalleerde Modules**.
+3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geïnstalleerde Modules**.
 
-4. Controleer het versienummer van de geinstalleerde CardGate modules.
+4. Controleer het versienummer van de geïnstalleerde CardGate modules.
 
 ## Configuratie
 
@@ -30,7 +30,7 @@ of neem contact op met je accountmanager.
 
 3. Scroll naar de **CardGate Bank algemeen** module en kies **Configureer**.
 
-4. Vul de **Site ID** en de **Hash Key (Codeersleutel)** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
+4. Vul de **site ID** en de **hash key** in, deze kun je vinden bij **Sites** op [Mijn CardGate](https://my.cardgate.com/).
 
 5. Klik nu op **Opslaan**.
 
@@ -40,7 +40,7 @@ of neem contact op met je accountmanager.
 
 8. Vul bij **Technische Koppeling** de **Callback URL** in, bijvoorbeeld:  
    **http://mijnwebshop.com/modules/cardgate/response.php**  
-  (Vervang **http://mijnwebshop.com** met de URL van je webshop)
+  (Vervang **http://mijnwebshop.com** met de URL van je webshop.)
 
 9. Zorg ervoor dat je na het testen bij **CardGate Bank algemeen** de **Configuratie** omschakelt van  
     **Test Mode** naar **Live mode** en sla het op (**Save**).
