@@ -41,7 +41,7 @@ class CardgatePayment extends PaymentModule {
         $this->smarty->assign( 'logoname', $this->logoname );
 
         $this->smarty->assign( 'extracosts', $this->extraCosts( $this->extra_cost ) );
-        $this->smarty->assign( 'paymenttext', $this->l( 'Pay with' ) . ' ' . $this->paymentname );
+        $this->smarty->assign( 'paymenttext', $this->l('Pay with') . ' ' . $this->paymentname );
 
         $this->smarty->assign( '_url', $this->_url );
         $this->smarty->assign( 'imageurl', $this->imageurl );
@@ -61,7 +61,7 @@ class CardgatePayment extends PaymentModule {
 
     public function displayConf() {
 
-        $this->_html = $this->displayConfirmation( $this->l( 'Settings updated' ) );
+        $this->_html = $this->displayConfirmation( $this->l('Settings updated') );
     }
 
     function get_url() {
