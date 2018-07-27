@@ -39,7 +39,7 @@ Gehen Sie zu Mein CardGate und fragen Sie Ihre **Site ID** und **Hash Key** an, 
 
 8. Gehen zu **Webseiten-Einstellungen** und füllen Sie die **Callback URL** ein, wie zum Beispiel:  
    **http://mywebshop.com/modules/cardgate/response.php**  
-   (Ersetzen Sie http://mywebshop.com mit der URL Ihres Webshops.)  
+   (Ersetzen Sie **http://mywebshop.com** mit der URL Ihres Webshops.)  
 
 9. Wenn Sie mit dem **Testen abgeschlossen** haben, schalten Sie dann von  
    dem **Test-Modus** in den **Live-Modus** um, und klicken Sie auf **Speichern**. 
