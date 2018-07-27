@@ -9,7 +9,7 @@ Dieses Modul is geeignet für PrestaShop version **1.6.x** .
 ## Vorbereitung
 
 Um dieses Modul zu verwenden, sind Zugangsdaten zu **CardGate** notwendig.  
-Gehen Sie zu Mein CardGate und fragen Sie Ihre **Site ID** und **Hash Key** an, oder kontaktieren Sie Ihren Accountmanager.
+Gehen Sie zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre **Site ID** und **Hash Key** an, oder kontaktieren Sie Ihren Accountmanager.
 
 ## Installation
 
