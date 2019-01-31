@@ -36,12 +36,34 @@ class CardgatePayment extends PaymentModule {
     }
 
     public function hookPayment( $params ) {
+        
+        $display = Configuration::get('CARDGATE_PAYMENT_DISPLAY');
+   
+        switch ($display){
+            case 'textonly':
+                $paymentlogo = '';
+                $paymenttext = $this->l('Pay with') . ' ' . $this->paymentname;
+                break;
+            case 'logoonly':
+                $paymentlogo = '<img style="max-width:60px" src="https://cdn.curopayments.net/images/paymentmethods/'.$this->logoname.'.svg" alt="'.$this->paymentcode.'" />';
+                $paymenttext = '';
+                break;
+            case 'textandlogo':
+                $paymentlogo = '<img style="max-width:60px" src="https://cdn.curopayments.net/images/paymentmethods/'.$this->logoname.'.svg" alt="'.$this->paymentcode.'" />';
+                $paymenttext = $this->l('Pay with') . ' ' . $this->paymentname;
+                break;
+            default:
+                $paymentlogo = '<img style="max-width:60px" src="https://cdn.curopayments.net/images/paymentmethods/'.$this->logoname.'.svg" alt="'.$this->paymentcode.'" />';
+                $paymenttext = $this->l('Pay with') . ' ' . $this->paymentname;
+        }
+        
+        
         $this->smarty->assign( 'paymentcode', $this->paymentcode );
         $this->smarty->assign( 'paymentname', $this->name );
-        $this->smarty->assign( 'logoname', $this->logoname );
+        $this->smarty->assign( 'paymentlogo', $paymentlogo );
 
         $this->smarty->assign( 'extracosts', $this->extraCosts( $this->extra_cost ) );
-        $this->smarty->assign( 'paymenttext', $this->l('Pay with') . ' ' . $this->paymentname );
+        $this->smarty->assign( 'paymenttext', $paymenttext);
 
         $this->smarty->assign( '_url', $this->_url );
         $this->smarty->assign( 'imageurl', $this->imageurl );

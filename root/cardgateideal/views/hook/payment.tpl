@@ -29,7 +29,7 @@
 	<div class="col-xs-12">
         <p class="payment_module cardgate">
                 <a href="javascript:void(0)" onclick="$('#cardgate_{$paymentcode}_form').submit();" id="cardgate{$paymentcode}_process_payment" title="{$paymenttext}">
-                        <img style="max-width:60px;" src="https://curopayments.com/docs/api/img/logo_{$logoname}.png" alt="ideal" />
+                        {$paymentlogo}
                         {$paymenttext}{if $extracosts != 0}  <span class="">+ &euro; {number_format($extracosts,2,',', '.')}</span> {/if}
                 </a>
         </p>
@@ -59,7 +59,7 @@
 {else}
 <p class="payment_module">
 	<a href="javascript:void(0)" onclick="$('#cardgate_{$paymentcode}_form').submit();" id="cardgate{$paymentcode}_process_payment" title="{l s='Pay with iDEAL' mod='ideal'}">
-		<img style="max-width:60px;" src="https://curopayments.com/docs/api/img/logo_{$logoname}.png" alt="ideal" /> {$paymenttext}				
+		{$paymentlogo} {$paymenttext}				
 	</a>
 </p>
 
