@@ -30,7 +30,7 @@
         <p class="payment_module cardgate">
                 <a href="javascript:void(0)" onclick="$('#cardgate_{$paymentcode}_form').submit();" id="cardgate{$paymentcode}_process_payment" title="{$paymenttext}">
                         {$paymentlogo}
-                        {$paymenttext}{if $extracosts != 0}  <span class="">+ &euro; {number_format($extracosts,2,',', '.')}</span> {/if}
+                        {$paymenttext}{if $extracosts != 0}  <span class="">+ {number_format($extracosts,2,',', '.')}</span> {/if}
                 </a>
         </p>
     </div>
