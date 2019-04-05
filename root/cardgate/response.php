@@ -38,7 +38,7 @@ if ( !is_object( Context::getContext()->link ) ) {
     Context::getContext()->link = new Link();
 }
 
-class cardgate_response {
+class cardgate_response {   
 
     var $status = '';
     var $post = array();
@@ -74,20 +74,14 @@ class cardgate_response {
     }
 
     function __isSafe() {
-
-        $extraData = explode( '|', $_REQUEST['extra'] );
-        $cartId = $extraData[0];
-        $option = strtoupper( $this->post['billing_option'] );
-        $cart = new Cart( $cartId );
-        $amount = $this->post['amount'];
-        $currency = new Currency( ( int ) ($cart->id_currency) );
+        
         $site_id = Configuration::get( 'CARDGATE_SITEID' );
         $hashKey = Configuration::get( 'CARDGATE_HASH_KEY' );
 
         $hashString = ($this->post['is_test'] == 1 ? 'TEST' : '') .
                 $this->post['transaction_id'] .
                 $this->post['currency'] .
-                $amount .
+                $this->post['amount'].
                 $this->post['ref'] .
                 $this->post['status'] .
                 $hashKey;
@@ -199,8 +193,8 @@ if ( $_mr->__isSafe()) {
     $extraCosts = floatval($extraData[1]);
 
     $cart = new Cart( $cartId );
-
-    $total = $cart->getOrderTotal( true, 3 );
+    $amountPaid = round($_mr->post['amount']/100,2);
+    $total = round($amountPaid - $extraCosts,2);
     $sStatus = $_mr->getStatus();
 
     switch ( $sStatus ) {
@@ -217,8 +211,7 @@ if ( $_mr->__isSafe()) {
             $newStatus = _PS_OS_PAYMENT_;
             break;
     }
-
-
+    
     if ( $cart->OrderExists() ) {
         $id_order = Order::getOrderByCartId( $cart->id );
         $oOrder = new Order( $id_order );
@@ -245,7 +238,7 @@ if ( $_mr->__isSafe()) {
                 $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
                 break;
             case 'succes':
-                    $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
+                $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
                 break;
         }
 
