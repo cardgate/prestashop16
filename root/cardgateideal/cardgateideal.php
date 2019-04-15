@@ -62,13 +62,9 @@ class Cardgateideal extends CardgatePayment {
 
     
     public function getBanks() {
-        if (Configuration::get( 'CARDGATE_MODE' ) == 1){
-            $test = '-TEST';
-        } else {
-            $test = '';
-        }
+        $this->checkIssuers();
         
-        $url = $this->get_url().'/cache/idealDirectoryCUROPayments'.$test.'.dat';
+        $url = $this->get_url().'/cache/idealDirectoryCUROPayments.dat';
          
         if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
             $result = false;
@@ -76,12 +72,41 @@ class Cardgateideal extends CardgatePayment {
             $result = file_get_contents( $url );
         }
 
-        $aBanks = array();
+        $aBanks = Configuration::get('cardgate_issuers');
 
         if ( $result ) {
             $aBanks = unserialize( $result );
             $aBanks[0] = $this->l('-Choose your bank please-');
         }
         return $aBanks;
-    }    
+    }
+    
+    public function checkIssuers(){
+        $issuerRefresh = (int) Configuration::get('cardgate_issuer_refresh');
+        if (! $issuerRefresh || $issuerRefresh < time()){
+            $this->fetchIssuers();
+        }
+    }
+    
+    public function fetchIssuers(){
+        $url = $this->get_url().'/cache/idealDirectoryCUROPayments.dat';
+        
+        if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
+            $result = false;
+        } else {
+            $result = file_get_contents( $url );
+        }
+        
+        $aBanks = array();
+        
+        if ( $result ) {
+            $aBanks = unserialize( $result );
+            $aBanks[0] = $this->l('-Choose your bank please-');
+        }
+        $data = serialize($aBanks);
+        
+        $iIssuerTime = 24 * 60 * 60 + time();
+        Configuration::updateValue('cardgate_issuer_refresh', $iIssuerTime);
+        Configuration::updateValue('cardgate_issuers', $data);
+    }
 }

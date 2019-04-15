@@ -114,6 +114,9 @@ class Cardgate extends PaymentModule {
             Configuration::updateValue( 'CARDGATE_SITEID', $siteid );
             Configuration::updateValue( 'CARDGATE_HASH_KEY', $hashkey );
             Configuration::updateValue( 'CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
+            
+            // reset iDEAL issuer cache
+            Configuration::updateValue('cardgate_issuer_refresh', 0);
 
             $output .= $this->displayConfirmation( $this->l('Settings updated') );
         }
