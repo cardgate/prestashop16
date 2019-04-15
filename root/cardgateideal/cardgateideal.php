@@ -63,21 +63,8 @@ class Cardgateideal extends CardgatePayment {
     
     public function getBanks() {
         $this->checkIssuers();
-        
-        $url = $this->get_url().'/cache/idealDirectoryCUROPayments.dat';
-         
-        if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
-            $result = false;
-        } else {
-            $result = file_get_contents( $url );
-        }
-
-        $aBanks = Configuration::get('cardgate_issuers');
-
-        if ( $result ) {
-            $aBanks = unserialize( $result );
-            $aBanks[0] = $this->l('-Choose your bank please-');
-        }
+        $sBanks = Configuration::get('cardgate_issuers');
+        $aBanks = unserialize($sBanks);
         return $aBanks;
     }
     
