@@ -95,6 +95,7 @@ class CardgatePayment extends PaymentModule {
     }
 
     public function extraCosts( $extra_cost ) {
+
         $cart = $this->context->cart;
         $total = number_format( ($cart->getOrderTotal( true, Cart::BOTH ) ), 2, '.', '' );
         if ( $extra_cost == 0 || $extra_cost == '' ) {
@@ -116,7 +117,8 @@ class CardgatePayment extends PaymentModule {
         } else {
             $sPrefix = '';
         }
-        $extrafee = $this->extraCosts( $this->extra_cost );
+
+	    $extrafee = Configuration::get( 'CARDGATE_'.strtoupper( $this->paymentcode).'_EXTRACOST' );
         $extrafee = (is_numeric($extrafee) ? $extrafee : 0);
         
         $cart = $this->context->cart;
@@ -205,7 +207,7 @@ class CardgatePayment extends PaymentModule {
         	$item ['quantity'] = 1;
         	$item ['sku'] = 'TRANSACTIONFEE';
         	$item ['name'] = 'Transactie kosten';
-        	$item ['price'] = round ( $extrafee , 0 );
+        	$item ['price'] = round ( $extrafee * 100, 0 );
         	$item ['vat'] = 0;
         	$item ['vat_amount'] = 0;
         	$item ['vat_inc'] = 1;
@@ -227,12 +229,13 @@ class CardgatePayment extends PaymentModule {
         	$item ['type'] = 6;
         	$cartitems [] = $item;
         }
-        $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal - $extrafee;
+        $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal;
+		
         if ($iTaxCorrection != 0) {
         	$item = array ();
         	$item ['quantity'] = 1;
         	$item ['sku'] = 'VATCORRECTION';
-        	$item ['name'] = 'vat_corection';
+        	$item ['name'] = 'vat_correction';
         	$item ['price'] = $iTaxCorrection;
         	$item ['vat'] = 0;
         	$item ['vat_amount'] = 0;
