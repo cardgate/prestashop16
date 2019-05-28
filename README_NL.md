@@ -4,7 +4,7 @@
 
 ## Support
 
-Deze module is geschikt voor PrestaShop versie **1.6.x** .
+Deze module is geschikt voor PrestaShop versie **1.6.x**
 
 ## Voorbereiding
 

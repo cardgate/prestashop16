@@ -193,8 +193,10 @@ if ( $_mr->__isSafe()) {
     $extraCosts = floatval($extraData[1]);
 
     $cart = new Cart( $cartId );
+
+	$extraCosts = round(floatval($extraData[1]),2);
     $amountPaid = round($_mr->post['amount']/100,2);
-    $total = round($amountPaid - $extraCosts,2);
+    $total = round(($amountPaid - $extraCosts) ,2);
     $sStatus = $_mr->getStatus();
 
     switch ( $sStatus ) {
@@ -238,7 +240,8 @@ if ( $_mr->__isSafe()) {
                 $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, NULL, false, $cart->secure_key );
                 break;
             case 'succes':
-                $_cardgate->validateOrder( $cartId, $newStatus, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
+	            $st = Configuration::get( 'CARDGATE_PENDING' );
+                $_cardgate->validateOrder( $cartId, $st, $total, $_cardgate->paymentname . ' Payment', NULL, NULL, ( int ) $cart->id_currency, false, $cart->secure_key );
                 break;
         }
 
@@ -254,7 +257,7 @@ if ( $_mr->__isSafe()) {
         if ( $sStatus != 'canceled') {
             $shippingCost = $oOrder->total_shipping;
             $newShippingCosts = $shippingCost + $extraCosts;
-            $extraCostsExcl = round( $extraCosts / (1 + (21 / 100)), 2 );
+            $extraCostsExcl = round( $extraCosts / (1 + ($oOrder->carrier_tax_rate / 100)), 2 );
 
             // add the extra costs to the totals 
             $oOrder->total_shipping = $newShippingCosts;
@@ -265,6 +268,18 @@ if ( $_mr->__isSafe()) {
 
             $oOrder->update();
         }
+
+	    if ( ($sStatus == 'succes') ) {
+		    $result = $oOrder->addOrderPayment( $oOrder->total_paid_tax_incl, $_cardgate->paymentname, $_REQUEST['transaction_id'] );
+		    $orderPayment = OrderPayment::getByOrderId( $oOrder->id );
+
+		    $history = new OrderHistory();
+		    $history->id_order = ( int ) $oOrder->id;
+		    $id_order_state = $newStatus;
+		    $history->changeIdOrderState( ( int ) $id_order_state, $oOrder, $orderPayment );
+		    $history->addWithemail();
+	    }
+
     }
     echo $_REQUEST['transaction_id'] . "." . $_REQUEST['status_id'];
 } else {

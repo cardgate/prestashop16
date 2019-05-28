@@ -4,7 +4,7 @@
 
 ## Support
 
-This plugin supports PrestaShop version **1.6.x** .
+This plugin supports PrestaShop version **1.6.x**
 
 ## Preparation
 
