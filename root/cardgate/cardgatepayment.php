@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.28';
+    var $version = '1.6.29';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -230,7 +230,7 @@ class CardgatePayment extends PaymentModule {
         	$cartitems [] = $item;
         }
         $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal;
-		
+
         if ($iTaxCorrection != 0) {
         	$item = array ();
         	$item ['quantity'] = 1;
