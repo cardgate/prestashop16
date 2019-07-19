@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.29';
+    var $version = '1.6.30';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
