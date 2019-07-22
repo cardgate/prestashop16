@@ -91,9 +91,11 @@ class Cardgateideal extends CardgatePayment {
             $aBanks[0] = $this->l('-Choose your bank please-');
         }
         $data = serialize($aBanks);
-        
-        $iIssuerTime = 24 * 60 * 60 + time();
-        Configuration::updateValue('cardgate_issuer_refresh', $iIssuerTime);
-        Configuration::updateValue('cardgate_issuers', $data);
+
+        if (array_key_exists("INGBNL2A", $aBanks)) {
+	        $iIssuerTime = 24 * 60 * 60 + time();
+	        Configuration::updateValue( 'cardgate_issuer_refresh', $iIssuerTime );
+	        Configuration::updateValue( 'cardgate_issuers', $data );
+        }
     }
 }
