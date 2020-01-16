@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.32';
+    var $version = '1.6.33';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -202,12 +202,13 @@ class CardgatePayment extends PaymentModule {
         	}
         }
 
+        $extrafee = round($extrafee * 100, 0);
         if ($extrafee > 0) {
         	$item = array ();
         	$item ['quantity'] = 1;
         	$item ['sku'] = 'TRANSACTIONFEE';
         	$item ['name'] = 'Transactie kosten';
-        	$item ['price'] = round ( $extrafee * 100, 0 );
+        	$item ['price'] = $extrafee;
         	$item ['vat'] = 0;
         	$item ['vat_amount'] = 0;
         	$item ['vat_inc'] = 1;
@@ -229,7 +230,7 @@ class CardgatePayment extends PaymentModule {
         	$item ['type'] = 6;
         	$cartitems [] = $item;
         }
-        $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal;
+        $iTaxCorrection = $cg_total - $iCartItemTotal - $iShippingTotal- $iProductCorrection - $iCartItemTaxTotal - $iShippingTaxTotal - $extrafee;
 
         if ($iTaxCorrection != 0) {
         	$item = array ();
