@@ -2,6 +2,8 @@
 
 # CardGate module voor PrestaShop 1.6.x
 
+[![Build Status](https://travis-ci.org/cardgate/prestashop16.svg?branch=master)](https://travis-ci.org/cardgate/prestashop16)
+
 ## Support
 
 Deze module is geschikt voor PrestaShop versie **1.6.x**
@@ -16,7 +18,7 @@ of neem contact op met je accountmanager.
 
 1. Download en unzip de meest recente [source code](https://github.com/cardgate/prestashop16/releases/) op je bureaublad.
 
-2. Plaats via FTP de **inhoud** van het **zip bestand** in de **root** map  van je website.
+2. Plaats via FTP de **modules** map van het **zip bestand** in de **root** map  van je website.
 
 3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geïnstalleerde Modules**.
 
