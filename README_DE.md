@@ -2,6 +2,8 @@
 
 # CardGate Modul für PrestaShop 1.6.x
 
+[![Build Status](https://travis-ci.org/cardgate/prestashop16.svg?branch=master)](https://travis-ci.org/cardgate/prestashop16)
+
 ## Support
 
 Dieses Modul is geeignet für PrestaShop version **1.6.x**
@@ -15,7 +17,7 @@ Gehen Sie zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre *
 
 1. Downloaden Sie den aktuellsten [**Source Code**](https://github.com/cardgate/prestashop16/releases/) auf Ihrem Desktop.
 
-2. Entpacken und uploaden Sie den Inhalt der **Zip-Datei** in den **Root-Ordner** Ihres Webshops.  
+2. Entpacken und uploaden Sie den Inhalt der **Modules-Ordner** in den **Modules-Ordner** Ihres Webshops.  
 
 3. Gehen Sie zum Ihrem **Prestashop-Adminbereich**, klicken Sie dann auf **Modules** und wählen Sie **Installed Modules** aus.
 
