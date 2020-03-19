@@ -15,7 +15,7 @@ Gehen Sie zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre *
 
 ## Installation
 
-1. Downloaden Sie den aktuellsten [**Source Code**](https://github.com/cardgate/prestashop16/releases/) auf Ihrem Desktop.
+1. Downloaden Sie den aktuellsten [**cardgate.zip**](https://github.com/cardgate/prestashop16/releases/) auf Ihrem Desktop.
 
 2. Entpacken und uploaden Sie den Inhalt der **Modules-Ordner** in den **Modules-Ordner** Ihres Webshops.  
 
