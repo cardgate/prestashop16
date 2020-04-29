@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.33';
+    var $version = '1.6.34';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -125,7 +125,7 @@ class CardgatePayment extends PaymentModule {
 
         $cg_total = number_format( (($cart->getOrderTotal( true, Cart::BOTH ) + $extrafee) * 100 ), 0, '.', '' );
         $site_id = Configuration::get( 'CARDGATE_SITEID' );
-        $ref = date( "YmdHis" ) . $cart->id;
+        $ref = 'Order ' . $cart->id;
         $extra = $cart->id . '|' . $extrafee;
         $hash = md5( $sPrefix . $site_id . $cg_total . $ref . Configuration::get( 'CARDGATE_HASH_KEY' ) );
         $address = new Address( $cart->id_address_invoice );
@@ -255,7 +255,7 @@ class CardgatePayment extends PaymentModule {
         $data['return_url_failed'] = Tools::getHttpHost( true, true ) . __PS_BASE_URI__ . 'index.php?controller=order&step=3';
         $data['amount'] = $cg_total;
         $data['currency'] = $currency->iso_code;
-        $data['description'] = 'Payment of the account #' . $ref;
+        $data['description'] = $ref;
         $data['ref'] = $ref;
         $data['extra'] = $extra;
         $data['first_name'] = $address->firstname;
