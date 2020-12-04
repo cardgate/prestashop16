@@ -19,9 +19,9 @@ Please visit [My CardGate](https://my.cardgate.com/) and retrieve your credentia
 
 2. Unzip the file, and using FTP, upload the **modules** folder to the **root** folder of your website.
 
-3. In your PrestaShop **admin**, go to the **Modules** tab and select **Installed Modules**.
+3. In your PrestaShop **admin**, go to **Modules**, **Modules and Services**.
 
-4. Check the version of the installed CardGate modules.
+4. Filter at **Payments and Gateways** the uninstalled Modules, and **install** all CardGate modules.
 
 ## Configuration
 
