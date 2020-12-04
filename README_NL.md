@@ -20,9 +20,9 @@ of neem contact op met je accountmanager.
 
 2. Unzip het bestand, en plaats via FTP de **modules** map in de **root** map  van je website.
 
-3. In je PrestaShop **admin**, ga naar de **Modules** tab en selecteer **Geïnstalleerde Modules**.
+3. Ga in je PrestaShop **admin** naar **Modules**, **Modules en Services**.
 
-4. Controleer het versienummer van de geïnstalleerde CardGate modules.
+4. Filter bij **Payments and Gateways** de niet geïnstalleerde modules, en **installeer** alle CardGate modules.
 
 ## Configuratie
 
