@@ -19,9 +19,9 @@ Gehen Sie zu [**Mein CardGate**](https://my.cardgate.com/) und fragen Sie Ihre *
 
 2. Entpacken und uploaden Sie den Inhalt der **Modules-Ordner** in den **Modules-Ordner** Ihres Webshops.  
 
-3. Gehen Sie zum Ihrem **Prestashop-Adminbereich**, klicken Sie dann auf **Modules** und wählen Sie **Installed Modules** aus.
+3. Gehen Sie in Ihrem PrestaShop **Adminbereich** zu **Module**, **Module und Service**.
 
-4. Kontrollieren Sie die Version des installierten CardGate Modules. 
+4. Filtern Sie bei **Payments and Gateways** die nicht installierten Module und **installieren**  Sie alle CardGate Module. 
 
 ## Konfiguration 
 
