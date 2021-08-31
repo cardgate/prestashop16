@@ -21,6 +21,7 @@ modules/*
 !modules/cardgatepaysafecard/
 !modules/cardgatepaysafecash/
 !modules/cardgateprzelewy24/
+!modules/cardgatespraypay/
 !tests/
 !.travis.yml
 !composer.json
