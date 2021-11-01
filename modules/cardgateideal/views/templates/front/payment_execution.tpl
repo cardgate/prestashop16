@@ -69,6 +69,7 @@
 				}
 				else
 				{
+					$('#cardgatesubmit').attr('disabled','disabled');
 					$('#cardgateideal_form').submit();
 				}
 				return false;
