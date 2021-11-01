@@ -12,7 +12,7 @@ class Cardgate extends PaymentModule {
         $this->paymentcode = 'cardgate';
         $this->paymentname = 'CardGate';
         $this->tab = 'payments_gateways';
-        $this->version = '1.6.35';
+        $this->version = '1.6.36';
         $this->author = 'CardGate';
         $this->bootstrap = true;
         $this->currencies = true;
