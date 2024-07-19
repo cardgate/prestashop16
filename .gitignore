@@ -11,7 +11,6 @@ modules/*
 !modules/cardgatedirectdebit/
 !modules/cardgatedirectebanking/
 !modules/cardgategiftcard/
-!modules/cardgategiropay/
 !modules/cardgateideal/
 !modules/cardgateidealqr/
 !modules/cardgateklarna/
