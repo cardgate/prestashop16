@@ -12,7 +12,7 @@ class Cardgate extends PaymentModule {
         $this->paymentcode = 'cardgate';
         $this->paymentname = 'CardGate';
         $this->tab = 'payments_gateways';
-        $this->version = '1.6.37';
+        $this->version = '1.6.38';
         $this->author = 'CardGate';
         $this->bootstrap = true;
         $this->currencies = true;
@@ -104,6 +104,7 @@ class Cardgate extends PaymentModule {
             $siteid = ( string ) Tools::getValue( 'CARDGATE_SITEID' );
             $hashkey = ( string ) Tools::getValue( 'CARDGATE_HASH_KEY' );
             $paymentdisplay = ( string ) Tools::getValue( 'CARDGATE_PAYMENT_DISPLAY');
+            $showissuers = ( string ) Tools::getValue ( 'CARDGATE_SHOW_ISSUERS' );
             $my_module_field_names = $this->myModelFieldNames();
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 Configuration::updateValue( $my_module_field_name, ( string ) Tools::getValue( $my_module_field_name ) );
@@ -114,7 +115,7 @@ class Cardgate extends PaymentModule {
             Configuration::updateValue( 'CARDGATE_SITEID', $siteid );
             Configuration::updateValue( 'CARDGATE_HASH_KEY', $hashkey );
             Configuration::updateValue( 'CARDGATE_PAYMENT_DISPLAY', $paymentdisplay );
-            
+            Configuration::updateValue ( 'CARDGATE_SHOW_ISSUERS', $showissuers );
             // reset iDEAL issuer cache
             Configuration::updateValue('cardgate_issuer_refresh', 0);
 
@@ -212,6 +213,27 @@ class Cardgate extends PaymentModule {
                     ),
                     'hint' => $this->l('Choose which display will be used at the checkout' )
                 ),
+                array (
+                    'type' => 'select',
+                    'label' => $this->l('Show issuers' ),
+                    'name' => 'CARDGATE_SHOW_ISSUERS',
+                    'required' => false,
+                    'default_value' => 0,
+                    'options' => array (
+                        'query' => array (
+                            array (
+                                'id' => 0,
+                                'name' => 'Without issuers'
+                            ),
+                            array (
+                                'id' => 1,
+                                'name' => 'With issuers'
+                            )
+                        ),
+                        'id' => 'id',
+                        'name' => 'name'
+                    )
+                ),
             ),
             'submit' => array(
                 'title' => $this->l('Save'),
@@ -252,7 +274,8 @@ class Cardgate extends PaymentModule {
             $mode = ( string ) Tools::getValue( 'CARDGATE_MODE' );
             $siteid = ( string ) Tools::getValue( 'CARDGATE_SITEID' );
             $hashkey = ( string ) Tools::getValue( 'CARDGATE_HASH_KEY' );
-            $paymentdisplay = ( string ) TOOLS::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
+            $paymentdisplay = ( string ) Tools::getValue ( 'CARDGATE_PAYMENT_DISPLAY' );
+            $showissuers = ( string ) Tools::getValue ( 'CARDGATE_SHOW_ISSUERS' );
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 $extra_costs[$my_module_field_name] = ( string ) Tools::getValue( $my_module_field_name );
             }
@@ -261,6 +284,7 @@ class Cardgate extends PaymentModule {
             $siteid = Configuration::get( 'CARDGATE_SITEID' );
             $hashkey = Configuration::get( 'CARDGATE_HASH_KEY' );
             $paymentdisplay = Configuration::get ( 'CARDGATE_PAYMENT_DISPLAY' );
+            $showissuers = Configuration::get ( 'CARDGATE_SHOW_ISSUERS' );
             foreach ( $my_module_field_names as $key => $my_module_field_name ) {
                 $extra_costs[$my_module_field_name] = Configuration::get( $my_module_field_name );
             }
@@ -271,6 +295,7 @@ class Cardgate extends PaymentModule {
         $helper->fields_value['CARDGATE_SITEID'] = $siteid;
         $helper->fields_value['CARDGATE_HASH_KEY'] = $hashkey;
         $helper->fields_value ['CARDGATE_PAYMENT_DISPLAY'] = $paymentdisplay;
+        $helper->fields_value ['CARDGATE_SHOW_ISSUERS'] = $showissuers;
 
         foreach ( $my_module_field_names as $key => $my_module_field_name ) {
             $helper->fields_value[$my_module_field_name] = $extra_costs[$my_module_field_name];

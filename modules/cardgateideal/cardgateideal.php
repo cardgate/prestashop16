@@ -36,9 +36,10 @@ class Cardgateideal extends CardgatePayment {
         $this->paymentname = 'iDEAL';
         $this->name = 'cardgateideal';
         $this->logoname = 'ideal';
-        $this->imageurl = 'https://gateway.cardgateplus.com/images/logo' . $this->paymentcode . '.gif';
+        $this->imageurl = 'https://cdn.curopayments.net/images/paymentmethods/' . $this->paymentcode . '.svg';
         $this->extra_cost = Configuration::get( 'CARDGATE_' . strtoupper( $this->paymentcode) . '_EXTRACOST' );
-         
+        $this->show_issuers = boolval( Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) );
+
         parent::__construct();
         
         $this->page = basename( __FILE__, '.php' );
@@ -59,7 +60,6 @@ class Cardgateideal extends CardgatePayment {
         
         if ( isset($GLOBALS['CARDGATENOTFOUND']) ) $this->warning = $this->l('The CardGate module is not found.');
     }
-
     
     public function getBanks() {
         $this->checkIssuers();
