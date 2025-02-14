@@ -40,12 +40,13 @@ class CardgateidealPaymentModuleFrontController extends ModuleFrontController {
 	{
 		$this->display_column_left = false;
 		parent::initContent();
-		
+
+		$this->context->smarty->assign('show_issuers', $this->module->show_issuers);
 		$this->context->smarty->assign('issuers', $this->module->getBanks());
-                $this->context->smarty->assign('_url', $this->module->_url);
-                $this->context->smarty->assign('imageurl', $this->module->imageurl);
-                $this->context->smarty->assign('fields', $this->module->paymentData());
-                $this->context->smarty->assign('logoname',$this->module->logoname);
+        $this->context->smarty->assign('_url', $this->module->_url);
+        $this->context->smarty->assign('imageurl', $this->module->imageurl);
+        $this->context->smarty->assign('fields', $this->module->paymentData());
+        $this->context->smarty->assign('logoname',$this->module->logoname);
 
 		$this->setTemplate('payment_execution.tpl');
 	}
