@@ -35,18 +35,19 @@
 <h3>{l s='iDEAL payment' mod='cardgateideal'}</h3>
 <form name="cardgateideal_form" id="cardgateideal_form" action="{$_url}" method="post">
 <p>
-	<img src="{$imageurl}" alt="iDEAL" style="float:left; margin: 0px 10px 5px 0px;" />
+	<img src="{$imageurl}" alt="iDEAL" style="max-width: 40px; float:left; margin: 0px 10px 5px 0px;" />
 	{l s='You have chosen to pay with iDEAL.' mod='cardgateideal'}
 	</br>
+	{if $show_issuers}
 	{l s='Choose your bank:' mod='cardgateideal'}
 	<select name="suboption" id="suboption">
 		{foreach from=$issuers key=id item=issuer}
 			<option value="{$id}">{$issuer}</option>
 		{/foreach}	
 	</select>
-        
-        {foreach from=$fields key=name item=value}
-            <input type="hidden" name="{$name}" value='{$value}'>
+	{/if}
+	{foreach from=$fields key=name item=value}
+		<input type="hidden" name="{$name}" value='{$value}'>
 	{/foreach}
 </p>
 
