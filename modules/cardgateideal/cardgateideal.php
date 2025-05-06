@@ -23,7 +23,6 @@ if ( file_exists( dirname(__FILE__).'/../cardgate/cardgate.php' )) {
 class Cardgateideal extends CardgatePayment {
 
     private $_postErrors = array();
-    protected $_paymentHookTpl = 'views/hook/payment.tpl';
     protected $_childClassFile = __FILE__;
 
     /**
@@ -31,14 +30,13 @@ class Cardgateideal extends CardgatePayment {
      */
     public function __construct() {
         global $cookie, $order;
-        
+
+        $this->name = 'cardgateideal';
         $this->paymentcode = 'ideal';
         $this->paymentname = 'iDEAL';
-        $this->name = 'cardgateideal';
         $this->logoname = 'ideal';
         $this->imageurl = 'https://cdn.curopayments.net/images/paymentmethods/' . $this->paymentcode . '.svg';
         $this->extra_cost = Configuration::get( 'CARDGATE_' . strtoupper( $this->paymentcode) . '_EXTRACOST' );
-        $this->show_issuers = boolval( Configuration::get( 'CARDGATE_SHOW_ISSUERS' ) );
 
         parent::__construct();
         
@@ -59,43 +57,5 @@ class Cardgateideal extends CardgatePayment {
         $id_lang = (!isset( $cookie ) OR ! is_object( $cookie )) ? intval( Configuration::get( 'PS_LANG_DEFAULT' ) ) : intval( $cookie->id_lang );
         
         if ( isset($GLOBALS['CARDGATENOTFOUND']) ) $this->warning = $this->l('The CardGate module is not found.');
-    }
-    
-    public function getBanks() {
-        $this->checkIssuers();
-        $sBanks = Configuration::get('cardgate_issuers');
-        $aBanks = unserialize($sBanks);
-        return $aBanks;
-    }
-    
-    public function checkIssuers(){
-        $issuerRefresh = (int) Configuration::get('cardgate_issuer_refresh');
-        if (! $issuerRefresh || $issuerRefresh < time()){
-            $this->fetchIssuers();
-        }
-    }
-    
-    public function fetchIssuers(){
-        $url = $this->get_url().'/cache/idealDirectoryCUROPayments.dat';
-        
-        if ( !ini_get( 'allow_url_fopen' ) || !function_exists( 'file_get_contents' ) ) {
-            $result = false;
-        } else {
-            $result = file_get_contents( $url );
-        }
-        
-        $aBanks = array();
-        
-        if ( $result ) {
-            $aBanks = unserialize( $result );
-            $aBanks[0] = $this->l('-Choose your bank please-');
-        }
-        $data = serialize($aBanks);
-
-        if (array_key_exists("INGBNL2A", $aBanks)) {
-	        $iIssuerTime = 24 * 60 * 60 + time();
-	        Configuration::updateValue( 'cardgate_issuer_refresh', $iIssuerTime );
-	        Configuration::updateValue( 'cardgate_issuers', $data );
-        }
     }
 }

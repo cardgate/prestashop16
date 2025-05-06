@@ -2,7 +2,7 @@
 
 class CardgatePayment extends PaymentModule {
 
-    var $version = '1.6.38';
+    var $version = '1.6.39';
     var $tab = 'payments_gateways';
     var $author = 'CardGate';
     var $shop_version = _PS_VERSION_;
@@ -10,7 +10,6 @@ class CardgatePayment extends PaymentModule {
     var $currencies_mode = 'radio';
     var $_html = '';
     var $extra_cost = '';
-    var $show_issuers = 0;
     protected $_paymentHookTpl = '';
 
     public function install() {
@@ -68,7 +67,6 @@ class CardgatePayment extends PaymentModule {
 
         $this->smarty->assign( '_url', $this->_url );
         $this->smarty->assign( 'imageurl', $this->imageurl );
-        $this->smarty->assign( 'show_issuers', $this->show_issuers );
         $this->smarty->assign( 'fields', $this->paymentData() );
 
         $this->smarty->assign( array(
