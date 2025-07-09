@@ -8,6 +8,7 @@ modules/*
 !modules/cardgatebillink/
 !modules/cardgatebitcoin/
 !modules/cardgatecreditcard/
+!modules/cardgatecrypto/
 !modules/cardgatedirectdebit/
 !modules/cardgatedirectebanking/
 !modules/cardgategiftcard/
